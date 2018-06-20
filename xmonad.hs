@@ -5,12 +5,13 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.CustomKeys
 import XMonad.Actions.Workscreen
+import Graphics.X11.ExtraTypes.XF86
 import System.IO
 
 main =
   xmonad $ def
     { borderWidth = 0
-    , terminal = "urxvt"
+    , terminal = "/home/divam/nobup/alacritty/target/release/alacritty"
     , keys = customKeys delKeys insKeys
     }
   where
@@ -52,6 +53,13 @@ main =
         , ((mod1Mask, xK_KP_End), windows $ view "7")
         , ((mod1Mask, xK_KP_Down), windows $ view "8")
         , ((mod1Mask, xK_KP_Page_Down), windows $ view "9")
+
+        , ((0    , xF86XK_MonBrightnessUp), spawn "xbacklight -inc 5")
+        , ((0    , xF86XK_MonBrightnessDown), spawn "xbacklight -dec 5")
+
+        , ((0    , xF86XK_AudioLowerVolume), spawn "amixer -q sset Master 5%-")
+        , ((0    , xF86XK_AudioRaiseVolume), spawn "amixer -q sset Master 5%+")
+        , ((0    , xF86XK_AudioMute), spawn "amixer set Master toggle")
         ]
         where
           m3 = (mod1Mask .|. shiftMask .|. controlMask )
